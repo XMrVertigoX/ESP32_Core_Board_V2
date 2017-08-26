@@ -1,3 +1,6 @@
 [submodule "libs/esp-idf"]
 	path = libs/esp-idf
 	url = https://github.com/espressif/esp-idf.git
+[submodule "libs/xXx"]
+	path = libs/xXx
+	url = git@github.com:XMrVertigoX/xXx_CPP.git

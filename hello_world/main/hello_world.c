@@ -24,9 +24,9 @@ void app_main() {
 
     for (int i = timeout; i > 0; i--) {
         if (i == timeout) {
-            ESP_LOGW(__func__, "Restarting in %02u seconds...", i);
+            ESP_LOGW(__func__, "Restarting in %u seconds...", i);
         } else {
-            ESP_LOGD(__func__, "Restarting in %02u seconds...", i);
+            ESP_LOGD(__func__, "Restarting in %u seconds...", i);
         }
 
         vTaskDelay(1000 / portTICK_PERIOD_MS);

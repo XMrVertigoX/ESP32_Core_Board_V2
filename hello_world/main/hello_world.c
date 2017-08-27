@@ -9,7 +9,7 @@
 static const uint32_t timeout = 10;
 static esp_chip_info_t chip_info;
 
-static void printHardwareInformation(void) {
+static void printHardwareDetails(void) {
     ESP_LOGI(__func__, "Hello world! This is ESP32_Core_board_V2.");
     ESP_LOGI(__func__, "Number of cores: %u", chip_info.cores);
     ESP_LOGI(__func__, "Silicon revision: %u", chip_info.revision);
@@ -20,7 +20,7 @@ static void printHardwareInformation(void) {
 
 void app_main() {
     esp_chip_info(&chip_info);
-    printHardwareInformation();
+    printHardwareDetails();
 
     for (int i = timeout; i > 0; i--) {
         if (i == timeout) {

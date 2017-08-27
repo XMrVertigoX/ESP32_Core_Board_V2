@@ -1,38 +1,38 @@
 #include <stdio.h>
 
+#include "esp_log.h"
 #include "esp_spi_flash.h"
 #include "esp_system.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+static const uint32_t timeout = 10;
+static esp_chip_info_t chip_info;
+
+static void printHardwareInformation(void) {
+    ESP_LOGI(__func__, "Hello world! This is ESP32_Core_board_V2.");
+    ESP_LOGI(__func__, "Number of cores: %u", chip_info.cores);
+    ESP_LOGI(__func__, "Silicon revision: %u", chip_info.revision);
+    // TODO: Print if flash is embedded or external
+    ESP_LOGI(__func__, "Memory: %u MB flash.", (spi_flash_get_chip_size() / (1024 * 1024)));
+    // TODO: Print some feature information (Wifi/BT/BLE)
+}
+
 void app_main() {
-    printf("Hello world!\r\n");
-
-    esp_chip_info_t chip_info;
     esp_chip_info(&chip_info);
+    printHardwareInformation();
 
-    printf("This is ESP32 chip with %d CPU cores and WiFi", chip_info.cores);
-    if ((chip_info.features & CHIP_FEATURE_BT)) printf("/BT");
-    if ((chip_info.features & CHIP_FEATURE_BLE)) printf("/BLE");
-    printf("\r\n");
+    for (int i = timeout; i > 0; i--) {
+        if (i == timeout) {
+            ESP_LOGW(__func__, "Restarting in %02u seconds...", i);
+        } else {
+            ESP_LOGD(__func__, "Restarting in %02u seconds...", i);
+        }
 
-    printf("Silicon revision: %d\n", chip_info.revision);
-
-    printf("Memory: %d MB", (spi_flash_get_chip_size() / (1024 * 1024)));
-    if (chip_info.features & CHIP_FEATURE_EMB_FLASH) {
-        printf(" embedded ");
-    } else {
-        printf(" external ");
-    }
-    printf("flash\r\n");
-
-    for (int i = 10; i > 0; i--) {
-        printf("Restarting in %02d seconds...\r", i);
-        fflush(stdout);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 
-    printf("Restarting now!\r\n");
+    ESP_LOGW(__func__, "Restarting");
 
     esp_restart();
 }

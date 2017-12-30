@@ -23,7 +23,7 @@ extern "C" {
 #include "mqtt.h"
 }
 
-static const char MQTT_TAG[]   = "MQTT";
+static const char TAG[]        = "MQTT";
 static const int CONNECTED_BIT = BIT0;
 
 static EventGroupHandle_t wifi_event_group;
@@ -91,9 +91,9 @@ void mqtt_init() {
     };
 
     mqtt_config.data_cb = [](mqtt_client *client, mqtt_event_data_t *event_data) {
-        ESP_LOGI(MQTT_TAG, "Publish topic: %.*s", event_data->topic_length,
+        ESP_LOGI(TAG, "Publish topic: %.*s", event_data->topic_length,
                  event_data->topic);
-        ESP_LOGI(MQTT_TAG, "Publish data: %.*s", event_data->data_length,
+        ESP_LOGI(TAG, "Publish data: %.*s", event_data->data_length,
                  event_data->data);
     };
 }
